@@ -12,7 +12,7 @@ class CareerController extends Controller
      */
     public function index()
     {
-        return view('career.index',['careers'=>Career::all()]);
+        return view('career.index', ['careers' => Career::all()]);
     }
 
     /**
@@ -34,9 +34,9 @@ class CareerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Career $career)
     {
-        //
+        return view('career.show', compact('career'));
     }
 
     /**
