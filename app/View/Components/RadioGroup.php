@@ -18,7 +18,7 @@ class RadioGroup extends Component
         //
     }
 
-    public function optionsWithLabel(): array
+    public function optionsWithLabels(): array
     {
         return array_is_list($this->options)
             ? array_combine($this->options, $this->options)
