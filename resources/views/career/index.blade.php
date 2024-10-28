@@ -5,13 +5,13 @@
             <div class=" grid grid-cols-2 gap-4">
                 <div>
                     <div class="font-medium mb-1">Search</div>
-                    <x-text-input name="search" placeholder="Search..." />
+                    <x-text-input name="search" value="{{ request('search') }}" placeholder="Search..." />
                 </div>
                 <div class="">
                     <div class="font-medium mb-1">Salary</div>
                     <div class="flex space-x-2">
-                        <x-text-input name="min_salary" value="" placeholder="Min Salary..." />
-                        <x-text-input name="max_salary" value="" placeholder="Max Salary..." />
+                        <x-text-input name="min_salary" value="{{ request('min_salary') }}" placeholder="Min Salary..." />
+                        <x-text-input name="max_salary" value="{{ request('max_salary') }}" placeholder="Max Salary..." />
                     </div>
                 </div>
                 <div>3</div>
