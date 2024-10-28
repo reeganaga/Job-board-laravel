@@ -23,18 +23,21 @@ class Career extends Model
 
     public function scopeFilter(QueryBuilder|Builder $query, array $filters): QueryBuilder|Builder
     {
-        return $query->when($filters['search'], function ($query, $search) {
+        return $query->when($filters['search'] ?? null, function ($query, $search) {
             $query->where(function ($query) use ($search) {
                 $query->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%');
+                    ->orWhere('description', 'like', '%' . $search . '%')
+                    ->orWhereHas('employer', function ($query) use ($search) {
+                        $query->where('company_name', 'like', '%' . $search . '%');
+                    });
             });
-        })->when($filters['min_salary'], function ($query, $min_salary) {
+        })->when($filters['min_salary'] ?? null, function ($query, $min_salary) {
             $query->where('salary', '>=', $min_salary);
-        })->when($filters['max_salary'], function ($query, $max_salary) {
+        })->when($filters['max_salary'] ?? null, function ($query, $max_salary) {
             $query->where('salary', '<=', $max_salary);
-        })->when($filters['experience'], function ($query, $experience) {
+        })->when($filters['experience'] ?? null, function ($query, $experience) {
             $query->where('experience', $experience);
-        })->when($filters['category'], function ($query, $category) {
+        })->when($filters['category'] ?? null, function ($query, $category) {
             $query->where('category', $category);
         });
     }

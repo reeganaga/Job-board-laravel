@@ -13,7 +13,7 @@ class CareerController extends Controller
     public function index()
     {
         $filters = request()->only(['search', 'min_salary', 'max_salary', 'experience', 'category']);
-        $careers = Career::filter($filters)->get();
+        $careers = Career::with('employer')->filter($filters)->get();
 
         return view('career.index', ['careers' => $careers]);
     }
@@ -39,7 +39,7 @@ class CareerController extends Controller
      */
     public function show(Career $career)
     {
-        return view('career.show', compact('career'));
+        return view('career.show', ['career' => $career->load('employer')]);
     }
 
     /**

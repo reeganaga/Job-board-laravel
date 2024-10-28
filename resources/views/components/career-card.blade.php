@@ -7,12 +7,13 @@
     </div>
     <div class="mb-4 flex justify-between items-center text-sm text-slate-500">
         <div class="flex space-x-4">
-            <div>Company name</div>
+            <div>{{ $career->employer->company_name }}</div>
             <div>{{ $career->location }}</div>
         </div>
         <div class="flex space-x-1">
             <x-tag>
-                <a href="{{ route('careers.index', ['experience' => $career->experience]) }}">{{ Str::ucfirst($career->experience) }}</a>
+                <a
+                    href="{{ route('careers.index', ['experience' => $career->experience]) }}">{{ Str::ucfirst($career->experience) }}</a>
             </x-tag>
             <x-tag>
                 <a href="{{ route('careers.index', ['category' => $career->category]) }}">{{ $career->category }}</a>
