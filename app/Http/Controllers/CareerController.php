@@ -12,7 +12,12 @@ class CareerController extends Controller
      */
     public function index()
     {
-        return view('career.index', ['careers' => Career::all()]);
+        $careers = Career::query();
+        $careers->when(request('search'), function ($query) {
+            $query->where('title', 'like', '%' . request('search') . '%')
+                ->orWhere('description', 'like', '%' . request('search') . '%');
+        });
+        return view('career.index', ['careers' => $careers->get()]);
     }
 
     /**
