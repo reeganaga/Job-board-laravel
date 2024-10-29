@@ -4,6 +4,9 @@
         <p class="mb-4 text-sm text-slate-500">
             {!! nl2br(e($career->description)) !!}
         </p>
+        <x-link-button :href="route('careers.application.create', $career)">
+            Apply
+        </x-link-button>
     </x-career-card>
     <x-card class="mb-4">
         <h2>Other Careers of {{ $career->employer->company_name }}</h2>

@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Career;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CareerApplicationController extends Controller
 {
     public function create(Career $career)
     {
+
+        Gate::authorize('apply', $career);
         return view('application.create', ['career' => $career]);
     }
     public function store(Career $career, Request $request)
     {
+        Gate::authorize('apply', $career);
         $career->careerApplications()->create([
             'user_id' => $request->user()->id,
             ...$request->validate([
