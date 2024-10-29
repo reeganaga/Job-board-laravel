@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Career;
+use App\Models\CareerApplication;
 use App\Models\Employer;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -36,6 +37,16 @@ class DatabaseSeeder extends Seeder
             Career::factory()->create([
                 'employer_id' => $employers->random()->id
             ]);
+        }
+
+        foreach ($users as $user) {
+            $careers = Career::inRandomOrder()->take(rand(0,3))->get();
+            foreach ($careers as $career) {
+                CareerApplication::factory()->create([
+                    'user_id'=>$user->id,
+                    'career_id'=>$career->id
+                ]);
+            }
         }
     }
 }
