@@ -8,8 +8,11 @@ Route::get('', function () {
     return to_route('careers.index');
 });
 
-Route::get('login', fn()=> to_route('auth.create'))->name('login');
+Route::get('login', fn() => to_route('auth.create'))->name('login');
 
 Route::resource('careers', CareerController::class)->only(['index', 'show']);
 
-Route::resource('auth', AuthController::class)->only(['create','store']);
+Route::resource('auth', AuthController::class)->only(['create', 'store']);
+
+Route::delete('logout', fn() => to_route('auth.destroy'))->name('logout');
+Route::delete('auth', [AuthController::class, 'destroy'])->name('auth.destroy');
