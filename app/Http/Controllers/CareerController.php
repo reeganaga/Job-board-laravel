@@ -39,7 +39,7 @@ class CareerController extends Controller
      */
     public function show(Career $career)
     {
-        return view('career.show', ['career' => $career->load('employer')]);
+        return view('career.show', ['career' => $career->load('employer.careers')]);
     }
 
     /**
