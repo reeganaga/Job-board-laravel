@@ -11,6 +11,8 @@ class CareerApplication extends Model
     /** @use HasFactory<\Database\Factories\CareerApplicationFactory> */
     use HasFactory;
 
+    protected $fillable = ['expected_salary','user_id','career_id'];
+
     public function career(): BelongsTo
     {
         return $this->belongsTo(Career::class);
