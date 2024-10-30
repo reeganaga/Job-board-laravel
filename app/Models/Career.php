@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,4 +54,12 @@ class Career extends Model
         return $this->hasMany(CareerApplication::class);
     }
 
+    public function hasUserApplied(Authenticatable|User|int $user): bool
+    {
+        return $this->where('id', $this->id)
+            ->whereHas(
+                'careerApplications',
+                fn($query) => $query->where('user_id', '=', $user->id ?? $user)
+            )->exists();
+    }
 }

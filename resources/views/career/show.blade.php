@@ -4,9 +4,15 @@
         <p class="mb-4 text-sm text-slate-500">
             {!! nl2br(e($career->description)) !!}
         </p>
-        <x-link-button :href="route('careers.application.create', $career)">
-            Apply
-        </x-link-button>
+        @can('apply', $career)
+            <x-link-button :href="route('careers.application.create', $career)">
+                Apply
+            </x-link-button>
+        @else
+            <p class="mb-4 text-sm text-slate-500 text-center">
+                You have already applied to this job. Please wait for the employer to respond.
+            </p>
+        @endcan
     </x-career-card>
     <x-card class="mb-4">
         <h2>Other Careers of {{ $career->employer->company_name }}</h2>

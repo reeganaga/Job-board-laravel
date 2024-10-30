@@ -70,6 +70,6 @@ class CareerPolicy
 
     public function apply(User $user, Career $career): bool
     {
-        return false;
+        return !$career->hasUserApplied($user);
     }
 }
