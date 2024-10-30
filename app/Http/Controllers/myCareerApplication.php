@@ -12,7 +12,12 @@ class myCareerApplication extends Controller
     public function index()
     {
         return view('my-job-application.index', [
-            'applications' => auth()->user()->careerApplications()->with('career','career.employer')->latest()->get(),
+            'applications' => auth()->user()->careerApplications()->with(
+                [
+                    'career' => fn($query) => $query->withAvg('careerApplications', 'expected_salary')->withCount('careerApplications'),
+                    'career.employer'
+                ]
+            )->latest()->get(),
         ]);
     }
 
