@@ -11,7 +11,7 @@ class CareerApplication extends Model
     /** @use HasFactory<\Database\Factories\CareerApplicationFactory> */
     use HasFactory;
 
-    protected $fillable = ['expected_salary','user_id','career_id'];
+    protected $fillable = ['expected_salary','user_id','career_id','cv_path'];
 
     public function career(): BelongsTo
     {

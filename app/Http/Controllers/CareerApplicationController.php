@@ -16,12 +16,20 @@ class CareerApplicationController extends Controller
     }
     public function store(Career $career, Request $request)
     {
+        $authorizeData = $request->validate([
+            'expected_salary' => 'required|min:1|max:1000000',
+            'cv' => 'file|required|mimes:pdf|max:2048'
+        ]);
+
+        $file = $request->file('cv');
+
+        $path = $file->store('cvs', 'private');
+
         Gate::authorize('apply', $career);
         $career->careerApplications()->create([
             'user_id' => $request->user()->id,
-            ...$request->validate([
-                'expected_salary' => 'required|min:1|max:1000000'
-            ])
+            'expected_salary' => $authorizeData['expected_salary'],
+            'cv_path' => $path
         ]);
 
         return redirect()->route('careers.show', $career)->with('success', 'Career application submitted');

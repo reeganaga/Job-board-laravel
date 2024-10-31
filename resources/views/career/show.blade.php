@@ -9,9 +9,16 @@
                 Apply
             </x-link-button>
         @else
-            <p class="mb-4 text-sm text-slate-500 text-center">
-                You have already applied to this job. Please wait for the employer to respond.
-            </p>
+            @auth
+                <p class="mb-4 text-sm text-slate-500 text-center">
+                    You have already applied to this job. Please wait for the employer to respond.
+                </p>
+            @else
+                <p class="mb-4 text-sm text-slate-500 text-center">
+                    Please <a href="{{ route('login') }}">login</a> to apply.
+                </p>
+            @endif
+
         @endcan
     </x-career-card>
     <x-card class="mb-4">
