@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CareerRequest;
+use App\Models\Career;
 use Illuminate\Http\Request;
 
 class MyCareerController extends Controller
@@ -29,44 +31,32 @@ class MyCareerController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CareerRequest $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string|min:3|max:255',
-            'location' => 'required|string|min:3|max:255',
-            'description' => 'required|string',
-            'salary' => 'required|numeric|min:5000',
-            'experience' => 'required|in:' . implode(',', \App\Models\Career::$experience),
-            'category' => 'required|in:' . implode(',', \App\Models\Career::$category),
-        ]);
+        $validatedData = $request->validate($request->validated());
 
         auth()->user()->employer->careers()->create($validatedData);
 
         return redirect()->route('my-careers.index')->with('success', 'Your Job has been created');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Career $myCareer)
     {
-        //
+        return view('my-career.edit', ['career' => $myCareer]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CareerRequest $request, Career $myCareer)
     {
-        //
+        $myCareer->update($request->validated());
+
+        return redirect()->route('my-careers.index')->with('success', 'Your Job has been updated');
     }
 
     /**
