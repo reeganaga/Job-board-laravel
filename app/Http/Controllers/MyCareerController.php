@@ -19,7 +19,7 @@ class MyCareerController extends Controller
      */
     public function create()
     {
-        //
+        return view('my-career.create');
     }
 
     /**
