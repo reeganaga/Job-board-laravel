@@ -1,8 +1,9 @@
 <x-layout>
     <x-breadcrumbs class="mb-4" :links="[
         'My Careers' => route('my-careers.index'),
-        'New Career' => "#",
+        'New Career' => '#',
     ]" />
+
     <x-card>
         <h2 class="mb-4 text-lg font-medium">
             Create Career

@@ -16,7 +16,7 @@ class CareerController extends Controller
     public function index()
     {
         $filters = request()->only(['search', 'min_salary', 'max_salary', 'experience', 'category']);
-        $careers = Career::with('employer')->filter($filters)->get();
+        $careers = Career::with('employer')->latest()->filter($filters)->get();
 
         return view('career.index', ['careers' => $careers]);
     }

@@ -11,7 +11,11 @@ class MyCareerController extends Controller
      */
     public function index()
     {
-        return view('my-career.index');
+        $careers = auth()->user()->employer
+        ->careers()
+        ->with(['careerApplications','careerApplications.user'])
+        ->get();
+        return view('my-career.index',['careers'=>$careers]);
     }
 
     /**
