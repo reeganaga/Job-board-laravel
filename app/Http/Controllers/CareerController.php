@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class CareerController extends Controller
 {
+
+
+
     /**
      * Display a listing of the resource.
      */

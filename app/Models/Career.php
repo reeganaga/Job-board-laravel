@@ -15,6 +15,10 @@ class Career extends Model
     /** @use HasFactory<\Database\Factories\CareerFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'title', 'description', 'salary', 'experience', 'category','location',
+    ];
+
     public static array $experience = ['entry', 'intermediate', 'senior'];
     public static array $category = [
         'IT',

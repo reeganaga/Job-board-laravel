@@ -27,7 +27,18 @@ class MyCareerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string|min:3|max:255',
+            'location' => 'required|string|min:3|max:255',
+            'description' => 'required|string',
+            'salary' => 'required|numeric|min:5000',
+            'experience' => 'required|in:' . implode(',', \App\Models\Career::$experience),
+            'category' => 'required|in:' . implode(',', \App\Models\Career::$category),
+        ]);
+
+        auth()->user()->employer->careers()->create($validatedData);
+
+        return redirect()->route('my-careers.index')->with('success', 'Your Job has been created');
     }
 
     /**

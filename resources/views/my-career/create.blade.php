@@ -28,14 +28,14 @@
                 </div>
                 <div>
                     <x-label for="experience" :required="true">Experience</x-label>
-                    <x-radio-group :all_option="false" name="experience" :options="array_combine(
+                    <x-radio-group :value="old('experience')" :all_option="false" name="experience" :options="array_combine(
                         array_map('ucfirst', \App\Models\Career::$experience),
                         \App\Models\Career::$experience,
                     )" />
                 </div>
                 <div>
                     <x-label for="category" :required="true">Category</x-label>
-                    <x-radio-group :all_option="false" name="category" :options="\App\Models\Career::$category" />
+                    <x-radio-group :value="old('category')" :all_option="false" name="category" :options="\App\Models\Career::$category" />
                 </div>
 
             </div>

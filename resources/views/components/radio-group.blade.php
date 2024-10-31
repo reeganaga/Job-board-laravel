@@ -13,4 +13,10 @@
             <span class="ml-2">{{ $label }}</span>
         </label>
     @endforeach
+
+    @error($name)
+        <div class="text-sm text-red-500 mt-1">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
