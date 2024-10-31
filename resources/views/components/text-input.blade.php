@@ -9,7 +9,17 @@
         </button>
     @endif
     <input x-ref="input-{{ $name }}" type="{{ $type }}" name="{{ $name }}"
-        value="{{ $value }}" placeholder="{{ $placeholder }}" id="{{ $name }}"
-        class="w-full rounded-md border-0 pr-8 py-1.5 px-2.5 text-sm ring-1 ring-slate-300 placeholder:text-slate-400 focus:ring-2">
+        value="{{ old($name, $value) }}" placeholder="{{ $placeholder }}" id="{{ $name }}"
+        @class([
+            'w-full rounded-md border-0 py-1.5 px-2.5 text-sm ring-1 placeholder:text-slate-400 focus:ring-2',
+            'pr-8' => $formRef,
+            'ring-slate-300' => !$errors->has($name),
+            'ring-red-500' => $errors->has($name),
+        ])>
 
+    @error($name)
+        <div class="text-sm text-red-500 mt-1">
+            {{ $message }}
+        </div>
+    @enderror
 </div>
