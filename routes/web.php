@@ -5,6 +5,7 @@ use App\Http\Controllers\CareerApplicationController;
 use App\Http\Controllers\CareerController;
 use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\myCareerApplication;
+use App\Http\Controllers\MyCareerController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('', function () {
@@ -27,4 +28,7 @@ Route::middleware('auth')->group(function () {
 
     // resource route for employer controller
     Route::resource('employers', EmployerController::class)->only('create', 'store');
+
+    // resource route for my career controller
+    Route::middleware('employer')->resource('my-careers', MyCareerController::class);
 });
