@@ -20,6 +20,7 @@ class MyCareerController extends Controller
         $careers = auth()->user()->employer
             ->careers()
             ->with(['careerApplications', 'careerApplications.user'])
+            ->withTrashed()
             ->get();
         return view('my-career.index', ['careers' => $careers]);
     }
