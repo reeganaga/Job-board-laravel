@@ -25,8 +25,13 @@
                     <div class=" text-center">No applications found</div>
                 @endforelse
             </div>
-            <div>
+            <div class="flex space-x-2">
                 <x-link-button :href="route('my-careers.edit', $career)">Edit</x-link-button>
+                <form action="{{ route('my-careers.destroy', $career) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <x-button >Delete</x-button>
+                </form>
             </div>
         </x-career-card>
     @empty

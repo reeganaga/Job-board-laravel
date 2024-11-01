@@ -31,4 +31,7 @@ Route::middleware('auth')->group(function () {
 
     // resource route for my career controller
     Route::middleware('employer')->resource('my-careers', MyCareerController::class);
+
+
+
 });

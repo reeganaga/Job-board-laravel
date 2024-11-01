@@ -6,6 +6,7 @@ use App\Http\Requests\CareerRequest;
 use App\Models\Career;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB; // Add this import
 
 class MyCareerController extends Controller
 {
@@ -71,8 +72,12 @@ class MyCareerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Career $myCareer)
     {
-        //
+
+        $myCareer->delete();
+
+        return redirect()->route('my-careers.index')->with('success', 'Your Job has been deleted');
+
     }
 }
