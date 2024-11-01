@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Career;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CareerController extends Controller
 {
@@ -15,6 +16,7 @@ class CareerController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAny', Career::class);
         $filters = request()->only(['search', 'min_salary', 'max_salary', 'experience', 'category']);
         $careers = Career::with('employer')->latest()->filter($filters)->get();
 
@@ -22,50 +24,12 @@ class CareerController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      */
     public function show(Career $career)
     {
+        Gate::authorize('view', $career);
         return view('career.show', ['career' => $career->load('employer.careers')]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

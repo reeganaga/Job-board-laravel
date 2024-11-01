@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CareerRequest;
 use App\Models\Career;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MyCareerController extends Controller
 {
@@ -13,11 +14,13 @@ class MyCareerController extends Controller
      */
     public function index()
     {
+        Gate::authorize('viewAnyEmployer', Career::class);
+
         $careers = auth()->user()->employer
-        ->careers()
-        ->with(['careerApplications','careerApplications.user'])
-        ->get();
-        return view('my-career.index',['careers'=>$careers]);
+            ->careers()
+            ->with(['careerApplications', 'careerApplications.user'])
+            ->get();
+        return view('my-career.index', ['careers' => $careers]);
     }
 
     /**
@@ -25,6 +28,7 @@ class MyCareerController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Career::class);
         return view('my-career.create');
     }
 
@@ -33,6 +37,8 @@ class MyCareerController extends Controller
      */
     public function store(CareerRequest $request)
     {
+        Gate::authorize('create', Career::class);
+
         $validatedData = $request->validate($request->validated());
 
         auth()->user()->employer->careers()->create($validatedData);
@@ -46,6 +52,7 @@ class MyCareerController extends Controller
      */
     public function edit(Career $myCareer)
     {
+        Gate::authorize('update', $myCareer);
         return view('my-career.edit', ['career' => $myCareer]);
     }
 
@@ -54,6 +61,8 @@ class MyCareerController extends Controller
      */
     public function update(CareerRequest $request, Career $myCareer)
     {
+        Gate::authorize('update', $myCareer);
+
         $myCareer->update($request->validated());
 
         return redirect()->route('my-careers.index')->with('success', 'Your Job has been updated');

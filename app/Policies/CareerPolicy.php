@@ -16,6 +16,11 @@ class CareerPolicy
         return true;
     }
 
+    public function viewAnyEmployer(User $user): bool
+    {
+        return true;
+    }
+
     /**
      * Determine whether the user can view the model.
      */
@@ -29,15 +34,22 @@ class CareerPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        return $user->employer !== null;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Career $career): bool
+    public function update(User $user, Career $career): bool | Response
     {
-        return false;
+        if ($user->employer->id !== $career->employer_id) {
+            return false;
+        }
+
+        if ($career->careerApplications()->count() > 0) {
+            return Response::deny('You already have an application for this job.');
+        }
+        return true;
         //
     }
 
@@ -47,7 +59,7 @@ class CareerPolicy
     public function delete(User $user, Career $career): bool
     {
         //
-        return false;
+        return $user->employer->user_id === $user->id;
     }
 
     /**
@@ -55,7 +67,9 @@ class CareerPolicy
      */
     public function restore(User $user, Career $career): bool
     {
-        return false;
+        return $user->employer->user_id === $user->id;
+
+
         //
     }
 
@@ -65,7 +79,7 @@ class CareerPolicy
     public function forceDelete(User $user, Career $career): bool
     {
         //
-        return false;
+        return $user->employer->user_id === $user->id;
     }
 
     public function apply(User $user, Career $career): bool
